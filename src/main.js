@@ -10,7 +10,6 @@ import { getOsInfo } from "./platform";
 
 export default async function main() {
   try {
-    core.info(`Setting up starknet-class-hash`);
     const versionInput = core.getInput("version");
 
     const version = await determineVersion(

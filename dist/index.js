@@ -30508,11 +30508,6 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
-// EXPORTS
-__nccwpck_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ main)
-});
-
 // EXTERNAL MODULE: external "path"
 var external_path_ = __nccwpck_require__(1017);
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
@@ -30603,8 +30598,8 @@ async function download(version) {
 
 async function main() {
   try {
-    core.info(`Setting up starknet-class-hash`);
-    const versionInput = core.getInput("version");
+    const versionInput = "v1";
+    
 
     const version = await determineVersion(
       versionInput
@@ -30633,6 +30628,10 @@ async function main() {
     core.setFailed(e);
   }
 }
+;// CONCATENATED MODULE: ./index.js
+
+
+main();
 })();
 
 module.exports = __webpack_exports__;
