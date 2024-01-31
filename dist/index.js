@@ -30515,9 +30515,8 @@ __nccwpck_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: external "path"
 var external_path_ = __nccwpck_require__(1017);
-var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var lib_core = __nccwpck_require__(4136);
+var core = __nccwpck_require__(4136);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(9885);
 ;// CONCATENATED MODULE: ./src/version.js
@@ -30533,7 +30532,7 @@ async function determineVersion(
   return version;
 }
 
-function version_versionWithPrefix(version) {
+function versionWithPrefix(version) {
   return /^\d/.test(version) ? `v${version}` : version;
 }
 
@@ -30543,7 +30542,7 @@ var external_os_default = /*#__PURE__*/__nccwpck_require__.n(external_os_);
 ;// CONCATENATED MODULE: ./src/platform.js
 
 
-function platform_getOsInfo() {
+function getOsInfo() {
   const arch = getOsArch();
   const platform = getOsPlatform();
   return `${arch}-${platform}`;
@@ -30587,8 +30586,8 @@ async function download(version) {
   const url = `https://github.com/${repo}/releases/download/${tag}/${basename}.${extension}`;
 
   core.info(`Downloading class-hash from ${url}`);
-  const pathToTarball = await tc.downloadTool(url);
-  const extractedPath = await tc.extractTar(pathToTarball);
+  const pathToTarball = await tool_cache.downloadTool(url);
+  const extractedPath = await tool_cache.extractTar(pathToTarball);
 
   core.debug(`Extracted to ${extractedPath}`);
   return extractedPath;
@@ -30604,33 +30603,34 @@ async function download(version) {
 
 async function main() {
   try {
-    const versionInput = lib_core.getInput("version");
+    core.info(`Setting up starknet-class-hash`);
+    const versionInput = core.getInput("version");
 
     const version = await determineVersion(
       versionInput
     );
 
-    const osInfo = platform_getOsInfo();
+    const osInfo = getOsInfo();
 
-    await lib_core.group(
-      `Setting up class-hash ${version_versionWithPrefix(version)}`,
+    await core.group(
+      `Setting up class-hash ${versionWithPrefix(version)}`,
       async () => {
-        let prefix = tool_cache.find("class-hash", version, osInfo);
-        if (!prefix) {
-          const download = await download(version);
-          prefix = await tool_cache.cacheDir(
-            download,
+        let pathToCli = tool_cache.find("class-hash", version, osInfo);
+        if (!pathToCli) {
+          const downloadPath = await download(version);
+          pathToCli = await tool_cache.cacheDir(
+            downloadPath,
             "class-hash",
             version,
             osInfo,
           );
         }
 
-        lib_core.addPath(external_path_default().join(prefix, "bin"));
+        core.addPath(pathToCli);
       },
     );
   } catch (e) {
-    lib_core.setFailed(e);
+    core.setFailed(e);
   }
 }
 })();
