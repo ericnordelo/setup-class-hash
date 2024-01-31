@@ -1,0 +1,10 @@
+name: Setup starknet-class-hash
+description: Sets up class-hash in your GitHub Actions workflow
+author: ericnordelo
+inputs:
+  version:
+    description: starknet-class-hash version to use
+    required: true
+runs:
+  using: "node20"
+  main: "dist/index.js"
