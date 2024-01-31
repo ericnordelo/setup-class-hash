@@ -28564,6 +28564,14 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 338:
+/***/ ((module) => {
+
+module.exports = eval("require")("./version");
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30508,13 +30516,11 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
-// EXTERNAL MODULE: external "path"
-var external_path_ = __nccwpck_require__(1017);
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(4136);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(9885);
-;// CONCATENATED MODULE: ./src/version.js
+;// CONCATENATED MODULE: ./src/versions.js
 async function determineVersion(
   version,
 ) {
@@ -30566,6 +30572,8 @@ function getOsPlatform() {
       throw new Error(`unsupported host platform: ${platform}`);
   }
 }
+// EXTERNAL MODULE: ../../../../../.nvm/versions/node/v18.16.0/lib/node_modules/@vercel/ncc/dist/ncc/@@notfound.js?./version
+var _notfoundversion = __nccwpck_require__(338);
 ;// CONCATENATED MODULE: ./src/download.js
 
 
@@ -30574,7 +30582,7 @@ function getOsPlatform() {
 
 async function download(version) {
   const osInfo = getOsInfo();
-  const tag = versionWithPrefix(version);
+  const tag = (0,_notfoundversion.versionWithPrefix)(version);
   const basename = `class-hash-${tag}-${osInfo}`;
   const extension = "tar.gz";
   const repo = "ericnordelo/starknet-class-hash";
@@ -30595,11 +30603,11 @@ async function download(version) {
 
 
 
-
 async function main() {
   try {
-    const versionInput = "v1";
-    
+    const versionInput = core.getInput("version");
+    core.info(`Input ${versionInput}`);
+
 
     const version = await determineVersion(
       versionInput
