@@ -10,6 +10,8 @@ import { getOsInfo } from "./platform";
 export default async function main() {
   try {
     const versionInput = core.getInput("version");
+    core.info(`Input ${versionInput}`);
+
 
     const version = await determineVersion(
       versionInput
