@@ -27,11 +27,10 @@ async function findDir(extractedPath) {
   for (const dirent of await fs.readdir(extractedPath, {
     withFileTypes: true,
   })) {
-    core.debug(`Found ${dirent.name}`);
-    if (dirent.isDirectory() && dirent.name.startsWith("class-hash-")) {
+    if (dirent.isDirectory()) {
       return path.join(extractedPath, dirent.name);
     }
   }
 
-  throw new Error(`could not find class-hash directory in ${extractedPath}`);
+  throw new Error(`Could not find inner directory in ${extractedPath}`);
 }
