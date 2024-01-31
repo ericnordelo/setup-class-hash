@@ -21,18 +21,18 @@ export default async function main() {
     await core.group(
       `Setting up class-hash ${versionWithPrefix(version)}`,
       async () => {
-        let prefix = tc.find("class-hash", version, osInfo);
-        if (!prefix) {
-          const download = await download(version);
-          prefix = await tc.cacheDir(
-            download,
+        let pathToCli = tc.find("class-hash", version, osInfo);
+        if (!pathToCli) {
+          const downloadPath = await download(version);
+          pathToCli = await tc.cacheDir(
+            downloadPath,
             "class-hash",
             version,
             osInfo,
           );
         }
 
-        core.addPath(path.join(prefix, "bin"));
+        core.addPath(pathToCli);
       },
     );
   } catch (e) {
