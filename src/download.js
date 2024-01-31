@@ -1,3 +1,5 @@
+import path from "path";
+import fs from "fs/promises";
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import { getOsInfo } from "./platform";

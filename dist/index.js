@@ -30529,6 +30529,12 @@ function versionWithPrefix(version) {
   return /^\d/.test(version) ? `v${version}` : version;
 }
 
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(1017);
+var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
+;// CONCATENATED MODULE: external "fs/promises"
+const promises_namespaceObject = require("fs/promises");
+var promises_default = /*#__PURE__*/__nccwpck_require__.n(promises_namespaceObject);
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(2037);
 var external_os_default = /*#__PURE__*/__nccwpck_require__.n(external_os_);
@@ -30570,6 +30576,8 @@ function getOsPlatform() {
 
 
 
+
+
 async function download(version) {
   const osInfo = getOsInfo();
   const tag = versionWithPrefix(version);
@@ -30589,11 +30597,11 @@ async function download(version) {
 }
 
 async function findDir(extractedPath) {
-  for (const dirent of await fs.readdir(extractedPath, {
+  for (const dirent of await promises_default().readdir(extractedPath, {
     withFileTypes: true,
   })) {
     if (dirent.isDirectory() && dirent.name.startsWith("class-hash-")) {
-      return path.join(extractedPath, dirent.name);
+      return external_path_default().join(extractedPath, dirent.name);
     }
   }
 
