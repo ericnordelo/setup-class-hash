@@ -3,10 +3,9 @@ import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import {
   determineVersion,
-  getFullVersion,
   versionWithPrefix,
-} from "./versions";
-import { downloadScarb } from "./download";
+} from "./version";
+import { download } from "./download";
 import { getOsInfo } from "./platform";
 
 export default async function main() {
@@ -24,7 +23,7 @@ export default async function main() {
       async () => {
         let prefix = tc.find("class-hash", version, osInfo);
         if (!prefix) {
-          const download = await downloadScarb(version);
+          const download = await download(version);
           prefix = await tc.cacheDir(
             download,
             "class-hash",
@@ -33,12 +32,9 @@ export default async function main() {
           );
         }
 
-        core.setOutput("class-hash-prefix", prefix);
         core.addPath(path.join(prefix, "bin"));
       },
     );
-
-    core.setOutput("class-hash-version", await getFullVersion());
   } catch (e) {
     core.setFailed(e);
   }
