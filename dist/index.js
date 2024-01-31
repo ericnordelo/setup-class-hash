@@ -28564,14 +28564,6 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ 338:
-/***/ ((module) => {
-
-module.exports = eval("require")("./version");
-
-
-/***/ }),
-
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30572,8 +30564,6 @@ function getOsPlatform() {
       throw new Error(`unsupported host platform: ${platform}`);
   }
 }
-// EXTERNAL MODULE: ../../../../../.nvm/versions/node/v18.16.0/lib/node_modules/@vercel/ncc/dist/ncc/@@notfound.js?./version
-var _notfoundversion = __nccwpck_require__(338);
 ;// CONCATENATED MODULE: ./src/download.js
 
 
@@ -30582,7 +30572,7 @@ var _notfoundversion = __nccwpck_require__(338);
 
 async function download(version) {
   const osInfo = getOsInfo();
-  const tag = (0,_notfoundversion.versionWithPrefix)(version);
+  const tag = versionWithPrefix(version);
   const basename = `class-hash-${tag}-${osInfo}`;
   const extension = "tar.gz";
   const repo = "ericnordelo/starknet-class-hash";

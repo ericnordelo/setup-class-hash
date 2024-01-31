@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import { getOsInfo } from "./platform";
-import { versionWithPrefix } from "./version";
+import { versionWithPrefix } from "./versions";
 
 export async function download(version) {
   const osInfo = getOsInfo();
