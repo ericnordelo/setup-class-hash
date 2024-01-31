@@ -1,10 +1,9 @@
-import path from "path";
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import {
   determineVersion,
   versionWithPrefix,
-} from "./version";
+} from "./versions";
 import { download } from "./download";
 import { getOsInfo } from "./platform";
 
