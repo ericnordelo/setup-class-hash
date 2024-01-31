@@ -27,6 +27,7 @@ async function findDir(extractedPath) {
   for (const dirent of await fs.readdir(extractedPath, {
     withFileTypes: true,
   })) {
+    core.debug(`Found ${dirent.name}`);
     if (dirent.isDirectory() && dirent.name.startsWith("class-hash-")) {
       return path.join(extractedPath, dirent.name);
     }
