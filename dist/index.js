@@ -30582,8 +30582,22 @@ async function download(version) {
   const pathToTarball = await tool_cache.downloadTool(url);
   const extractedPath = await tool_cache.extractTar(pathToTarball);
 
-  core.debug(`Extracted to ${extractedPath}`);
-  return extractedPath;
+  const pathToCli = await findDir(extractedPath);
+
+  core.debug(`Extracted to ${pathToCli}`);
+  return pathToCli;
+}
+
+async function findDir(extractedPath) {
+  for (const dirent of await fs.readdir(extractedPath, {
+    withFileTypes: true,
+  })) {
+    if (dirent.isDirectory() && dirent.name.startsWith("class-hash-")) {
+      return path.join(extractedPath, dirent.name);
+    }
+  }
+
+  throw new Error(`could not find class-hash directory in ${extractedPath}`);
 }
 
 ;// CONCATENATED MODULE: ./src/main.js
